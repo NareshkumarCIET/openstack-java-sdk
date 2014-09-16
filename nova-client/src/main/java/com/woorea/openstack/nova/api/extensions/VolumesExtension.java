@@ -9,98 +9,156 @@ import com.woorea.openstack.nova.model.Volume;
 import com.woorea.openstack.nova.model.VolumeForCreate;
 import com.woorea.openstack.nova.model.VolumeForImageCreate;
 import com.woorea.openstack.nova.model.Volumes;
+/**
+ * @author Naresh
+ * The VolumesExtension Class gives the Volume Extension to Extension Class.
+ */
 
 public class VolumesExtension {
-
-	private final OpenStackClient CLIENT;
-
-	public VolumesExtension(OpenStackClient client) {
-		CLIENT = client;
-	}
-
-	public List list(boolean detail) {
-		return new List(detail);
-	}
-
-	public Create create(VolumeForCreate volume) {
-		return new Create(volume);
-	}
-
-	public UploadToImage uploadToImage(VolumeForImageCreate volumeForImage) {
-		return new UploadToImage(volumeForImage);
-	}
-
-	public Show show(String id) {
-		return new Show(id);
-	}
-
-	public ShowMetadata showMetadata(String id) {
-		return new ShowMetadata(id);
-	}
-
-	public Delete delete(String id) {
-		return new Delete(id);
-	}
-
-	public class List extends OpenStackRequest<Volumes> {
-
-		public List(boolean detail) {
-			super(CLIENT, HttpMethod.GET, detail ? "/os-volumes/detail"
-					: "/os-volumes", null, Volumes.class);
-		}
-
-	}
-
-	public class Create extends OpenStackRequest<Volume> {
-
+    /**
+     * The Private Variable OpenStackClient is of type final.
+     */
+    private final OpenStackClient CLIENT;
+    /**
+     * Constructor VolumesExtension uses the OpenStackClient Request from 
+     * Client.
+     * @param client gives the Request of the Client. 
+     */
+    public VolumesExtension(OpenStackClient client) {
+        CLIENT = client;
+    }
+    /**
+     * The Method list() returns the List Class and 
+     * @return New List() method.
+     */
+    public List list(boolean detail) {
+        return new List(detail);
+    }
+    /**
+     * Method Create for VolumeForCreate Class and has parameter of volume.
+     * @param volume gives the volume detail.
+     * @return new flavor variable for create method.
+     */
+    public Create create(VolumeForCreate volume) {
+        return new Create(volume);
+    }
+    /**
+     * UploadToImage Class is used to give the Image to VolumeForImageCreate 
+     * Class.
+     * @param volumeForImage pass to the UploadToImage Method.
+     * @return New Upload Image to the Method uploadToImage().
+     */
+    public UploadToImage uploadToImage(VolumeForImageCreate volumeForImage) {
+        return new UploadToImage(volumeForImage);
+    }
+    /**
+     * Method Show for VolumesExtension Class and pass the id value.
+     * @param id gives id of Client.
+     * @return Shows new id value.
+     */
+    public Show show(String id) {
+        return new Show(id);
+    }
+   /**
+     * Method showMetadata for VolumesExtension Class and pass the id value.
+     * @param id gives id of Client.
+     * @return MetaData as new id value.
+     */
+    public ShowMetadata showMetadata(String id) {
+        return new ShowMetadata(id);
+    }
+    /**
+     * Method Delete for VolumesExtension Class and pass the id value.
+     * @param id gives id of Client.
+     * @return deleted id value.
+     */
+    public Delete delete(String id) {
+        return new Delete(id);
+    }
+    /**
+     * Class list inherits the OpenStackRequest given by the Client and pass to
+     * the VolumeExtension Class.
+     */
+    public class List extends OpenStackRequest < Volumes > {
+        /**
+         * Parameterized Constructor for the list Class and return type of
+         * boolean.
+         * @param detail gives the Volumes detail.
+         */
+        public List(boolean detail) {
+            super(CLIENT, HttpMethod.GET, detail ? "/os-volumes/detail"
+                    : "/os-volumes", null, Volumes.class);
+        }
+    }
+    /**
+     * Class Create inherits the OpenStackRequest given by the Client and pass
+     * to the Volume Class.
+     */
+    public class Create extends OpenStackRequest < Volume > {
 		// private Volume volume;
-
-		public Create(VolumeForCreate volume) {
-			super(CLIENT, HttpMethod.POST, "/os-volumes", Entity.json(volume),
-					Volume.class);
-			// this.volume = volume;
-		}
-
-	}
-
-	// Upload volume to image service as image
-
-	public class UploadToImage extends OpenStackRequest<Void> {
-
-		public UploadToImage(VolumeForImageCreate volumeForImageCreate) {
-			super(CLIENT, HttpMethod.POST, new StringBuilder("/volumes/")
-					.append(volumeForImageCreate.getVolumeId() + "/action"),
-					Entity.json(volumeForImageCreate), Void.class);
-		}
-
-	}
-
-	public class Show extends OpenStackRequest<Volume> {
-
-		public Show(String id) {
-			super(CLIENT, HttpMethod.GET, new StringBuilder("/os-volumes/")
-					.append(id).toString(), null, Volume.class);
-		}
-
-	}
-
-	public class ShowMetadata extends OpenStackRequest<Metadata> {
-
-		public ShowMetadata(String id) {
-			super(CLIENT, HttpMethod.GET, new StringBuilder("/os-volumes/")
-					.append(id).append("/metadata").toString(), null,
-					Metadata.class);
-		}
-
-	}
-
-	public class Delete extends OpenStackRequest<Void> {
-
-		public Delete(String id) {
-			super(CLIENT, HttpMethod.DELETE, new StringBuilder("/os-volumes/")
-					.append(id).toString(), null, Void.class);
-		}
-
-	}
-
+        public Create(VolumeForCreate volume) {
+            super(CLIENT, HttpMethod.POST, "/os-volumes", Entity.json(volume),
+                    Volume.class);
+            // this.volume = volume;
+        }
+    }
+    /**
+     * Upload volume to image service as image and uses the HTTP Post().
+     */ 
+    public class UploadToImage extends OpenStackRequest < Void > {
+         /**
+         * Constructor UploadToImage Method used to give the Image to
+         * VolumeForImageCreate Class.
+         * @param volumeForImageCreate pass to the UploadToImage Method.
+         */
+        public UploadToImage(VolumeForImageCreate volumeForImageCreate) {
+            super(CLIENT, HttpMethod.POST, new StringBuilder("/volumes/")
+                    .append(volumeForImageCreate.getVolumeId() + "/action"),
+                    Entity.json(volumeForImageCreate), Void.class);
+        }
+    }
+    /**
+     * Class Show inherits the OpenStackRequest given by the Client and pass to
+     * the VolumesExtension Class.
+     */
+    public class Show extends OpenStackRequest < Volume > {
+        /**
+         * Method Show is used to show the id value of the Client, it is
+         * Constructor and depends on the Base Class.
+         * @param id gives the Client Id.
+         */
+        public Show(String id) {
+            super(CLIENT, HttpMethod.GET, new StringBuilder("/os-volumes/")
+                    .append(id).toString(), null, Volume.class);
+        }
+    }
+     /**
+     * Class ShowMetadata inherits the OpenStackRequest given by the Client and
+     * has the Metadata information.
+     */
+    public class ShowMetadata extends OpenStackRequest < Metadata > {
+        /**
+         * Constructor method of ShowMetadata and depends on the Base Class.
+         * @param id gives the Client Id.
+         */
+        public ShowMetadata(String id) {
+            super(CLIENT, HttpMethod.GET, new StringBuilder("/os-volumes/")
+                    .append(id).append("/metadata").toString(), null,
+                    Metadata.class);
+        }
+    }
+    /**
+     * Class Delete inherits the OpenStackRequest given by the Client and
+     * deletes the Request given by the Client.
+     */
+    public class Delete extends OpenStackRequest < Void > {
+        /**
+         * Constructor method of Delete and Calls the HttpMethod of Delete.
+         * @param id gives the Client Id.
+         */
+        public Delete(String id) {
+            super(CLIENT, HttpMethod.DELETE, new StringBuilder("/os-volumes/")
+                    .append(id).toString(), null, Void.class);
+        }
+    }
 }
